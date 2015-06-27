@@ -20,7 +20,8 @@
         android:layout_alignParentEnd="true"
         android:inputType="text"
         android:hint="@string/search_artist"
-        android:imeOptions="actionSearch" />
+        android:imeOptions="actionSearch"
+        />
 
 
     <!-- tools:listitem -->

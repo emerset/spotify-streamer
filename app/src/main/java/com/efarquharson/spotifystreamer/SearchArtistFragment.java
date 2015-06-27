@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,8 +46,7 @@ public class SearchArtistFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_search_artist, container, false);
 
         // Set up listener for text input
-        EditText searchArtist = (EditText) rootView.findViewById(R.id.searchArtist);
-        // searchArtist.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        final EditText searchArtist = (EditText) rootView.findViewById(R.id.searchArtist);
         searchArtist.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -58,6 +58,10 @@ public class SearchArtistFragment extends Fragment {
                     artistClass.execute(inputSearch);
                     // end of AsyncTask call
                     handled = true;
+                    // hide soft keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchArtist.getWindowToken(), 0);
                 }
                 return handled;
             }
