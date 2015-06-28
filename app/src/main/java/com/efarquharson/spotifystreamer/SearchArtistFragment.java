@@ -36,13 +36,28 @@ import kaaes.spotify.webapi.android.models.ArtistsPager;
 public class SearchArtistFragment extends Fragment {
 
     static final String LOG_TAG = SearchArtistFragment.class.getSimpleName();
+    String searchString = "";
 
     public SearchArtistFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("searchArtist")) {
+                searchString = savedInstanceState.getString("searchArtist");
+                FetchArtistClass artistClass = new FetchArtistClass();
+                artistClass.execute(searchString);
+                // hide soft keyboard
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(container.getWindowToken(), 0); //testing
+            }
+        }
+
+
         View rootView = inflater.inflate(R.layout.fragment_search_artist, container, false);
 
         // Set up listener for text input
@@ -62,12 +77,21 @@ public class SearchArtistFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchArtist.getWindowToken(), 0);
+                    // save search to Bundle
+                    searchString = inputSearch;
                 }
                 return handled;
             }
         });
+
         return rootView;
     } // End of onCreateView
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("searchArtist", searchString);
+    }
 
     // Create Custom AsyncTask
     public class FetchArtistClass extends AsyncTask<String, Void, ArtistsPager> {
@@ -96,6 +120,12 @@ public class SearchArtistFragment extends Fragment {
             // Bind ListView to ArrayAdapter
             ListView listView = (ListView) getActivity().findViewById(R.id.listArtists);
             listView.setAdapter(mArtistAdapter);
+
+            // change focus (to collapse soft keyboard/remove flashing curser)
+            listView.requestFocus();
+
+            // Save list<Artist> to Bundle
+
         }
     } // End of Custom AsyncTask
 
