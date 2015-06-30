@@ -45,28 +45,29 @@ public class SearchArtistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.fragment_search_artist, container, false);
+        final EditText searchArtist = (EditText) rootView.findViewById(R.id.searchArtist);
+
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("searchArtist")) {
                 searchString = savedInstanceState.getString("searchArtist");
-                FetchArtistClass artistClass = new FetchArtistClass();
-                artistClass.execute(searchString);
-                // hide soft keyboard
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(container.getWindowToken(), 0); //testing
+                if (!searchString.isEmpty()) {
+                    FetchArtistClass artistClass = new FetchArtistClass();
+                    artistClass.execute(searchString);
+                }
             }
         }
 
 
-        View rootView = inflater.inflate(R.layout.fragment_search_artist, container, false);
+
 
         // Set up listener for text input
-        final EditText searchArtist = (EditText) rootView.findViewById(R.id.searchArtist);
         searchArtist.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
                     // call Asynctask with query String from searchArtist
                     String inputSearch = v.getText().toString();
                     FetchArtistClass artistClass = new FetchArtistClass();
