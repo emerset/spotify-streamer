@@ -14,12 +14,14 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/microphonelogo" />
+        android:src="@drawable/microphonelogo"
+        android:background="#ffffffff"
+        android:contentDescription="@string/artist_image_view"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coldplay"
         android:id="@+id/searchListItemName"
         android:layout_alignBottom="@+id/searchListItemPic"
         android:layout_toEndOf="@+id/searchListItemPic"
@@ -28,7 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textSize="@dimen/abc_text_size_medium_material"
-        android:gravity="center_vertical|start" />
+        android:gravity="center_vertical|start"
+        android:text="Name of Artist" />
 
 
 </RelativeLayout>

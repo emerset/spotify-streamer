@@ -2,6 +2,7 @@ package com.efarquharson.spotifystreamer;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -107,7 +109,7 @@ public class SearchArtistFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArtistsPager pager) {
+        protected void onPostExecute(final ArtistsPager pager) {
             // Call custom adapter to populate ListView
             SearchArtistAdapter mArtistAdapter = new SearchArtistAdapter(
                     // context
@@ -121,6 +123,18 @@ public class SearchArtistFragment extends Fragment {
             // Bind ListView to ArrayAdapter
             ListView listView = (ListView) getActivity().findViewById(R.id.listArtists);
             listView.setAdapter(mArtistAdapter);
+
+            // link list item with Intent (to go to top 10 tracks)
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Artist currentArtist = pager.artists.items.get(position);
+                    String spotifyId = currentArtist.id;
+                    Intent topTenTracks = new Intent(getActivity(), TopTenTracks.class);
+                    topTenTracks.putExtra("ArtistID", spotifyId);
+                    startActivity(topTenTracks);
+                }
+            });
 
             // change focus (to collapse soft keyboard/remove flashing curser)
             listView.requestFocus();
