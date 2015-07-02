@@ -8,14 +8,12 @@ import android.widget.ArrayAdapter;
 
 public class SearchArtist extends AppCompatActivity {
 
-    public ArrayAdapter<String> mArtistAdapter;
+    // public ArrayAdapter<String> mArtistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_artist);
-
-
     }
 
     @Override

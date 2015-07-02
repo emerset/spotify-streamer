@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -51,6 +52,7 @@ public class SearchArtistFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_search_artist, container, false);
         final EditText searchArtist = (EditText) rootView.findViewById(R.id.searchArtist);
 
+        // if bundle was created, call asynctask with the info passed
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("searchArtist")) {
                 searchString = savedInstanceState.getString("searchArtist");
@@ -90,6 +92,7 @@ public class SearchArtistFragment extends Fragment {
         return rootView;
     } // End of onCreateView
 
+    // Save Search String to bundle
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -120,6 +123,11 @@ public class SearchArtistFragment extends Fragment {
                     pager.artists.items
             );
 
+            // if no results showed up, send toast message
+            if (pager.artists.items.isEmpty()) {
+                Toast.makeText(getActivity(), "No results with that name", Toast.LENGTH_LONG).show();
+            }
+
             // Bind ListView to ArrayAdapter
             ListView listView = (ListView) getActivity().findViewById(R.id.listArtists);
             listView.setAdapter(mArtistAdapter);
@@ -138,8 +146,6 @@ public class SearchArtistFragment extends Fragment {
 
             // change focus (to collapse soft keyboard/remove flashing curser)
             listView.requestFocus();
-
-            // Save list<Artist> to Bundle
 
         }
     } // End of Custom AsyncTask

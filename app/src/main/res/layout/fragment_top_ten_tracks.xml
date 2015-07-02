@@ -14,11 +14,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         tools:listitem="@android:layout/simple_list_item_1"
-        android:id="@+id/topTenTracks">
+        android:id="@+id/listviewTopTenTracks">
     </ListView>
 
 </RelativeLayout>
