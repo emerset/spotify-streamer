@@ -138,8 +138,10 @@ public class SearchArtistFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Artist currentArtist = pager.artists.items.get(position);
                     String spotifyId = currentArtist.id;
+                    String artistName = currentArtist.name;
                     Intent topTenTracks = new Intent(getActivity(), TopTenTracks.class);
                     topTenTracks.putExtra("ArtistID", spotifyId);
+                    topTenTracks.putExtra("ArtistName", artistName);
                     startActivity(topTenTracks);
                 }
             });

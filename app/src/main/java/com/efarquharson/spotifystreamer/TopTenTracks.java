@@ -1,6 +1,8 @@
 package com.efarquharson.spotifystreamer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +14,12 @@ public class TopTenTracks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten_tracks);
-
-
+        Intent intent = getIntent();
+        ActionBar ab = getSupportActionBar();
+        String searchQuery = intent.getStringExtra("ArtistName");
+        if (ab != null) {
+            ab.setSubtitle(searchQuery);
+        }
     }
 
 

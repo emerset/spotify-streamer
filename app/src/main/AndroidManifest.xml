@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".TopTenTracks"
-            android:label="@string/title_activity_top_ten_tracks" >
+            android:label="@string/title_activity_top_ten_tracks"
+            android:parentActivityName=".SearchArtist">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SearchArtist" />
