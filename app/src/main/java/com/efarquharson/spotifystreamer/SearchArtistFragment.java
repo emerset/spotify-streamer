@@ -74,8 +74,10 @@ public class SearchArtistFragment extends Fragment {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_NULL) {
                     // call Asynctask with query String from searchArtist
                     String inputSearch = v.getText().toString();
-                    FetchArtistClass artistClass = new FetchArtistClass();
-                    artistClass.execute(inputSearch);
+                    if (!inputSearch.isEmpty()) {
+                        FetchArtistClass artistClass = new FetchArtistClass();
+                        artistClass.execute(inputSearch);
+                    }
                     // end of AsyncTask call
                     handled = true;
                     // hide soft keyboard
